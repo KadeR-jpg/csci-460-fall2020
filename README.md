@@ -1,152 +1,34 @@
-# CSCI 460 - Operating Systems!
+# CSCI-460
+##### Top Level Repo for everything in Operating Systems
+----
+Initializing the ReadMe with information on PA0. Subject to change with the next Programming assignments. PA0 is about getting familiar with some of the products we will be using throughout the semester, including Git, Virtualbox/Vagrant and CMD line. This step is about getting familiar with some markdown and github. I kinda wanted to try alot of markdown formatting so this is not the most elegant solution but it's more fun.
+- [x] Make a list
+- [ ] Divide a Number by Zero
+- [x] <img src="https://i.kym-cdn.com/entries/icons/facebook/000/028/207/Screen_Shot_2019-01-17_at_4.22.43_PM.jpg" alt="Meme" width="180"/>
 
-This is the base upstream repository for CSCI 460.
+* [**Github Leaderboard**](https://github.com/EvanLi/Github-Ranking/blob/master/README.md)
+  * This
 
-This repository is mostly intended to contain examples from class and serve as an example GitHub repository for students.
+* [**Clojure: Overtone**](https://github.com/overtone/overtone)
 
-Also, to use GitHub effectively in this class we require a rather particular way of setting things up.
-Below I outline how you can setup two repositories: one private and one public.
-**Your private repo** will be where you check in your solo work (early programming assignments) and for our grading.
-**Your public repo** can be used to contribute things back to this class repo.
+* [__Python: The F*ck__](https://github.com/nvbn/thefuck)
+*  Everything about these readme pages are great. They are informative and clean. Not too much or too little. I obviously like using unordered lists as of now but i think getting tables involved would be cool and helpful. The embedded code formats will be useful in the future too.
 
-> These instructions are adapted from [CSCI 366 (Systems Programming)](https://github.com/msu/csci-366-fall2020) @ Montana State University.
-> Many thanks to Carson Gross for paving the way.
-> In fact, there are some videos from 366 that may be useful if this is confusing to you (below).
-> Make sure you follow OUR directions below though - remember, this is CSCI 460, not CSCI 366 :-)
-> 1. [Setting Up Your Git Repositories](https://youtu.be/MFBeFUorg3w)
-> 2. [GitHub Repo Diagram Explained](https://www.youtube.com/watch?v=zMwEQN8oG7E)
+### Task 3: Vagrant
+It looks like running the uname -a command in the vagrant shell tells us what linux version is running on our VM.
+![Uname CMD](Vagrant_Uname.png)
 
-### Getting Started
+### Task 4: Command Line
+* __cd ~:__ takes you to your home directory
+* __pwd:__ prints local directory
+* __mkdir -p:__ Makes sub-directories. Creates the parent dir if it doesn't exist, goes down a level if the dir exists.
+* __ln -s:__ creats a symbolic link to _mydir_
+* __env | grep PATH:__ Pipes environment variable to grep and matches the PATH variable outputting something pretty.
+* __curl -O:__ Downloads files from a remote, -O saves it to the current working directory.
+* __cat info:__ concatenate allows us to display the contents of a file.
+* __sudo lshw -html:__ gives us a detailed report on hardware. I'm assuming the html flag allows us to retrieve .html files.
+* How to get more information w/out google? Man pages!
+* I personally love the man pages because i am not super familiar with the unix cmd line so just typing man grep to get a quick overview of what/where/when and why to use it is super helpful and probably the most used tool for me so far.
 
-1. Please follow the steps in the _**Setup Your PRIVATE Repo (via Clone)**_ section below.
-   - Create an SSH identity (see _**Setup Your SSH Identity**_ below).
-2. Please follow the steps in the _**Setup Your PUBLIC Repo (via Fork)**_ section below.
-3. Please follow the steps in the _**Register Your PRIVATE Repo (via Pull Request)**_ section below.
-4. Check out additional info in the _**Other Things To Know**_ section.
 
-> **NOTE:** My examples are all based on a Unix-y terminal running atop macOS.
-> If you use a different OS (e.g., Windows) your mileage may vary.
 
-# Setup Your PRIVATE Repo (via Clone)
-
-**Your private repository** will be used for your individual work and our grading.
-Unfortunately, GitHub doesn't let you fork a repo _and then_ make it private.
-Thus, rather than the traditional Forking model, we are going to use a Copy model for the class.
-Please use the following steps to create a *PRIVATE* version of this repo for your work:
-
-- Create a *private* repository in your own account by
-    - Going to <https://github.com/new>
-    - Enter the name `csci-460-fall2020-private`
-    - Select `Private`
-    - Navigate to the `Settings` -> `Manage Access` section
-    - Add `traviswpeters` (Travis's GitHub handle) and `reesep` (Reese's GitHub handle) as collaborators
-- Now run the following git commands, substituting your GitHub username and NetID where required:
-```bash
-$ git clone https://github.com/traviswpeters/cs460-code.git csci-460-fall2020-private
-$ cd csci-460-fall2020-private
-$ git remote set-url origin git@github.com:<YOUR-GITHUB-USERNAME>/csci-460-fall2020-private.git
-$ git remote add upstream https://github.com/traviswpeters/cs460-code.git
-```
-
-You now have a private copy of the repository on GitHub.
-You can push and pull to this repository with the standard `git pull` and `git push` commands.
-
-When you want to get an update from the public class repository you can run this command:
-
-```
-$ git pull upstream master
-```
-
-You might want to do this at least each week, but likely before each class.
-
-# Setup Your PUBLIC Repo (via Fork)
-
-**Your public repository** can be used for contributing back to the class repository and
-to register your private repository.
-Please fork this repository to your personal account.
-
-**DO NOT PUSH YOUR INDIVIDUAL WORK CODE TO THIS REPOSITORY**
-
-<!-- I highly recommend against cloning the public respoitory to your local system, to avoid confusion between the two.  -->
-<!-- You can edit files in the public repository via the web interface, and that will be much safer. -->
-
-### Register Your PRIVATE Repo (via Pull Request)
-
-In your forked copy of the class repo (the public version), please add a file to the `/repos` directory that is named
-```
-<YOUR NET ID>.txt
-```
-with the git URL of your private repository.
-
-For example, if I were a student with the NetID `W43m513` and my GitHub username was `studentIAm`
-I would add a file named `W43m513.txt` to `/repos` with the following line:
-```
-git@github.com:studentIAm/csci-460-fall2020-private.git
-```
-
-And then create a pull request against this repository.
-
-We will accept the pull request, and your private work repo will be registered for the class at that point.
-
-# Other Things To Know
-
-### Word of Caution
-
-In CSCI 460 it is highly recommended that students **DO NOT** clone their public fork of this repository to their local system.
-This is to avoid confusion between your public and private repos.
-If this applies to you (i.e., you are prone to confusion), you should know that there is no need to have the public repo on your local system;
-you can edit files in the public repository via the web interface and submit pull requests there too.
-
-### Setup Your SSH Identity
-
-Setting up an SSH identity makes it possible for you to interact with GitHub repos via the command line
-without having to re-enter your password all the time.
-If you've already setup an SSH key to have passwordless access to GitHub on the command line, you can probably skip this step.
-You can check to see if you have a key setup by looking in your `~/.ssh/` directory.
-If there is nothing there, or if you don't have a key dedicated to using with GitHub, you should read on.
-
-You should then be able to copy/paste the **public key** to GitHub.
-
-This article has more details on that process:
-[Adding a new SSH key to your GitHub account](https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account)
-
-### Programming Assignments (PA)
-
-Once you've created your **private repository**, you can create separate directories for each assignment.
-Each programming assignment should be kept in its own directory (`/pa0`, `/pa1`, `/pa2`, etc.).
-Please do your solo work in the appropriate homework directory.
-Remember, **DO NOT PUSH YOUR INDIVIDUAL WORK CODE TO THE PUBLIC REPOSITORY**
-
-### Class Code By The Week
-
-Each week we will likely look at different code examples.
-These code examples help us practice tools we use, help us to understand how an OS implements something, etc.
-For weeks with code examples, a new directory (`weekN`) will be added to help us organize our examples.
-
-### VirtualBox and Vagrant
-
-The most important file here IMHO is our class `Vagrantfile`.
-This file contains the configuration for the VM we are using in this class.
-
-### "Synced Folder" (a.k.a. "Shared Folder")
-
-In class we've talked about using _shared folders_ to share files between your host OS and your guest OS.
-Once you know you've cloned the repo to your local system you can add a line like this to your `Vagrantfile`:
-
-```bash
-config.vm.synced_folder "/Users/myHome/dir/where/I/work/cs460-code", "/home/vagrant/code"
-# Note that we are using the absolute path here.
-# I've had mixed results with using symbols that expand to the correct directory
-# (E.g., '~' for 'home directory). Try at your own risk...
-```
-
-Now when we access our VM, there should be a directory (`~/code`) in the VM that is synchronized between the host and guest.
-
-This will enable you to, for example, edit code in your preferred editor on your host,
-and compile/run code on the guest.
-
-At the very least, however, means that your code is not actually stored on the VM; code is stored on your host.
-This enables you to delete (`vagrant destroy`) your VM, create a new VM, and pick right up where you left off with your work.
-
-_**WARNING:**_ This means you need to make sure you never save files that you want to keep directly to the VM.
-Important files should be stored on the host and version-controlled with Git/GitHub.
