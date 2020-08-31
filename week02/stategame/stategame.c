@@ -158,7 +158,14 @@ void freeNode(struct listnode *node)
 // freeAllNodes: free all nodes starting at the head of the list
 void freeAllNodes(struct listnode *head)
 {
-    // TODO: fill me in, please! :-)
+    struct node* temp;
+
+    while (head != NULL)
+    {
+        temp = head;
+        head = head->next;
+        freeNode(temp);
+    }
 }
 
 // printNames: step through the list and print the names
