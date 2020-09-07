@@ -7,7 +7,6 @@ Initializing the ReadMe with information on PA0. Subject to change with the next
 - [x] <img src="https://i.kym-cdn.com/entries/icons/facebook/000/028/207/Screen_Shot_2019-01-17_at_4.22.43_PM.jpg" alt="Meme" width="180"/>
 
 * [**Github Leaderboard**](https://github.com/EvanLi/Github-Ranking/blob/master/README.md)
-  * This
 
 * [**Clojure: Overtone**](https://github.com/overtone/overtone)
 
@@ -75,7 +74,7 @@ It looks like running the uname -a command in the vagrant shell tells us what li
 ==22137== For counts of detected and suppressed errors, rerun with: -v
 ==22137== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
-* This is the output from valgrind --tool=memcheck ./stategame
+* This is the output from ```valgrind --tool=memcheck ./stategame```
 
 ### Task 8: Git
 * You're in my private repo. Hi.
