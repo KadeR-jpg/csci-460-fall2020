@@ -78,5 +78,4 @@ It looks like running the uname -a command in the vagrant shell tells us what li
 
 ### Task 8: Git
 * You're in my private repo. Hi.
-* Submission video (https://youtu.be/wiz6fZerOM0)
-
+* Submission video https://youtu.be/wiz6fZerOM0
