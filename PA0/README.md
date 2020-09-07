@@ -31,8 +31,8 @@ It looks like running the uname -a command in the vagrant shell tells us what li
 
 
 ### Task 5: Makefiles
-* In program directory directory.
-* It is important to use PHONY because we dont want to create anything new when we are removing files. PHONY does not create any file so it important to use it when you are cleaning up.
+* In PA0 Directory.
+* It is important to use .PHONY because we dont want to create anything new when we are removing files. PHONY does not create any file so it important to use it when you are cleaning up.
 * I implemented a text scramble script from geeksforgeeks to take the the dressed.txt as input and then when i call make scramble it mixes all the word from dressed.txt making a new .txt file called dressedScrambled.txt.
 
 ### Task 6: Programming is C
