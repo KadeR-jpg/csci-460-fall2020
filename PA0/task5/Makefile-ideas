@@ -1,0 +1,71 @@
+# Some ideas and examples for things you can do with Makefiles.
+
+TARGET = hello_world
+CC     = gcc
+WARN   = -W -Wall -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wconversion
+CFLAGS = -g3 -O1 $(WARN) -std=c99
+LDLIBS = -lm -lncurses -lld
+CFILES = $(wildcard *.c)
+OFILES = $(patsubst %.c, %.o, $(CFILES))
+DFILES = $(patsubst %.c, .deps/%.d, $(CFILES))
+LINT = lint -p
+LP = /usr/bin/lp
+
+# targets that don't create a file with the same name as the target are called "phony targets."
+# (not strictly required...)
+.PHONY: clean install count list kill test deploy ctags package bz2
+
+$(TARGET): $(OFILES)
+	$(CC) $(CFLAGS) $(CFILES) -o $@
+    @size make
+
+clean:
+    rm -f *.o *~ core.* ~/core .DS_Store
+
+install:
+    cp $(TARGET) /usr/bin/$(TARGET) && rm $(TARGET)
+
+lint: $(CFILES)
+    $(LINT) $<
+
+count:
+    wc *.c
+
+list:
+    ls -l *.c *.h
+
+kill:
+    killall yalnixtty yalnixnet yalnix
+
+# Verify that the SW we need is installed...
+test:
+    @hash pandoc 2>/dev/null || { echo >&2 "I require pandoc but it's not installed.  Aborting."; exit 1; }
+    @hash pandoc-citeproc 2>/dev/null || { echo >&2 "I require pandoc-citeproc but it's not installed.  Aborting."; exit 1; }
+    @hash mypdfmerge.py 2>/dev/null || { echo >&2 "I require mypdfmerge.py but it's not installed.  Aborting."; exit 1; }
+    @hash pdflatex 2>/dev/null || { echo >&2 "I require pdflatex but it's not installed.  Aborting."; exit 1; }
+
+deploy:
+    if [ -d "${SITE}/" ]; then \
+        echo "$@: Found website directory @ $(SITE)"; \
+        for f in ${DEPLOYFILES}; do \
+            echo "copying $$f to $(SITE)/"; cp $$f $(SITE)/; \
+        done \
+        && echo "...Done!\n"; \
+        echo "$@: also updating data from refs.bib..."; \
+        python resources/pybibparse.py \
+        echo "...Done!\n"; \
+        cd $(SITE) && git add . && git commit -m "deploying public build artifacts --- auto 'make deploy'" && git push && echo "...updated!"; \
+    else echo "$@: $(SITE) not found"; \
+    fi
+
+ctags: $(TARGET)
+	ctags -R .
+
+package:
+	make bz2
+
+bz2:
+	make clean
+	cd ..; rm -rf $(TARGET)/$(TARGET).tar.bz2
+	cd ..; tar jcv ./$(TARGET) > $(TARGET).tar.bz2
+	mv ../$(TARGET).tar.bz2 .

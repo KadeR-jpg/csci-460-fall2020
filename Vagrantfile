@@ -4,6 +4,7 @@
 Vagrant.configure("2") do |config|
   # A few different VMs...
   config.vm.box = "hashicorp/bionic64"
+  config.vm.synced_folder ".", "/home/vagrant/projects"
 
   # X-forwarding
   # Thanks, https://computingforgeeks.com/how-to-enable-and-use-ssh-x11-forwarding-on-vagrant-instances/

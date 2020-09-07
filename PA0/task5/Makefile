@@ -1,8 +1,8 @@
-# credit: https://endler.dev/2017/makefiles/
 .PHONY: clean
 
+
 dress: trousers shoes jacket
-	@echo "All done. Let's go otside!\n" >> dressed.txt
+	@echo "All done. Let's go outside!\n" >> dressed.txt
 
 jacket: pullover
 	@echo "Putting on jacket.\n" >> dressed.txt
@@ -28,3 +28,6 @@ socks: pullover
 clean: 
 	rm *.txt
 	@echo "Cleaning up..."
+
+scramble: 
+	python test.py

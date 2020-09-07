@@ -31,4 +31,52 @@ It looks like running the uname -a command in the vagrant shell tells us what li
 * I personally love the man pages because i am not super familiar with the unix cmd line so just typing man grep to get a quick overview of what/where/when and why to use it is super helpful and probably the most used tool for me so far.
 
 
+### Task 5: Makefiles
+* In program directory directory.
+* It is important to use PHONY because we dont want to create anything new when we are removing files. PHONY does not create any file so it important to use it when you are cleaning up.
+* I implemented a text scramble script from geeksforgeeks to take the the dressed.txt as input and then when i call make scramble it mixes all the word from dressed.txt making a new .txt file called dressedScrambled.txt.
+
+### Task 6: Programming is C
+```
+  void freeAllNodes(struct listnode *head)
+{
+    struct listnode *current = head;
+    struct listnode *next;
+    while(current != NULL)
+    {
+        next = current -> next;
+        freeNode(&current);
+        current = next;
+    };
+    
+}
+```
+
+* From the freeAllNodes function in stategame. 
+
+### Task 7: Debugging in C Programs.
+* 1: The address of head in the statesgame is ```0x7fffffffe3d0```
+* You can call ```info local``` in the gdb debugger.
+
+### Task 8: Valgrind
+```
+==22137== HEAP SUMMARY:
+==22137==     in use at exit: 19 bytes in 2 blocks
+==22137==   total heap usage: 3 allocs, 1 frees, 1,043 bytes allocated
+==22137==
+==22137== LEAK SUMMARY:
+==22137==    definitely lost: 0 bytes in 0 blocks
+==22137==    indirectly lost: 0 bytes in 0 blocks
+==22137==      possibly lost: 0 bytes in 0 blocks
+==22137==    still reachable: 19 bytes in 2 blocks
+==22137==         suppressed: 0 bytes in 0 blocks
+==22137== Rerun with --leak-check=full to see details of leaked memory
+==22137==
+==22137== For counts of detected and suppressed errors, rerun with: -v
+==22137== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
+* This is the output from valgrind --tool=memcheck ./stategame
+
+### Task 8: Git
+* You're in my private repo. Hi.
 
