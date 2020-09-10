@@ -1,8 +1,9 @@
 # ignore a local directory
+.vscode/
 code-archive/
-PA1\photos/
+PA1/photos/
+/Submission Videos
 *.jpg
 .DS_Store
-*.o
-*.i
+*.[oi~]
 *~
