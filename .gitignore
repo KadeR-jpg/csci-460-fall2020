@@ -1,5 +1,7 @@
 # ignore a local directory
 code-archive/
+PA1\photos/
+*.jpg
 .DS_Store
 *.o
 *.i
