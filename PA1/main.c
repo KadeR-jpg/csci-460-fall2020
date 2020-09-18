@@ -5,14 +5,10 @@
 #include <string.h>
 #include <errno.h>
 
-// Things to note:
-// - use of `errno` and `strerror()` - more detailed feedback on error/error type
+
 extern int errno;
 
-// Error Codes:
-//  -1: insufficient arguments
-//  -2: exec failed!
-//  -3: kill failed!
+
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
