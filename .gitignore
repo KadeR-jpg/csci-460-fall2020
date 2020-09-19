@@ -7,3 +7,5 @@ PA1/photos/
 .DS_Store
 *.[oi~]
 *~
+.vagrant
+CS58_CODE_EXAMPLES
