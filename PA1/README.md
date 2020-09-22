@@ -9,3 +9,4 @@ UHHH this program has been rough but anyways here it is.
 * The HTML portion of the program does not exist, i just did not have time to implement it but i think i got everything else working relatively right.
 * I was able to convert images in the background while the user is entering information.
 * Refer to the diagram 
+* [Youtube Link](https://youtu.be/Q6vBQ4bM-LM)
