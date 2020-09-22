@@ -8,7 +8,7 @@ LDFLAGS =
 SRCS    = $(wildcard *.c)
 OBJS    = $(SRCS:.c=.o)
 DEPS    = $(wildcard *.h)
-TARGET  = demo
+TARGET  = album
 
 all: $(TARGET)
 
@@ -20,4 +20,4 @@ $(TARGET): $(OBJS)
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJS) $(TARGET) *~
+	rm -rf $(OBJS) $(TARGET) core *~

@@ -1,9 +1,14 @@
 # ignore a local directory
 .vscode/
+.idea/
 code-archive/
-PA1/photos/
-/Submission Videos
+photos/
+PaxHeader/
+display
+displayclear
+main
 *.jpg
+*.pdf
 .DS_Store
 *.[oi~]
 *~
