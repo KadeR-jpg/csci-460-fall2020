@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-W -Wall -std=c11 -ggdb -pthread -m32
 LIBS=
-SRCS= newb2bsim.c 
+SRCS= b2bsim.c 
 OBJS=$(SRCS:.c=.o)
 TARGET= b2bsim 
 

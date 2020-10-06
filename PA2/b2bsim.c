@@ -16,14 +16,13 @@ int MAXCARS;
 int RANDSEED = 42;
 //0 == False, 1 == True
 int VERBOSITY = 0;
-int passedCars = 0;
 int SAMEDIRECTION = 1;
 //array for storing the destination of the car
 char current_destination[16] = "";
 char travelLock[16] = "";
 //cars on bridge
 static volatile int cars_OB = 0;
-
+static volatile int carsPassed = 0;
 //Data structure to store directions and what thread is being used
 struct Car
 {
@@ -191,6 +190,7 @@ void *onOneWay(struct Car *car)
 void *exitOneWay(struct Car *car)
 {
     cars_OB--;
+    
     sleep(1);
     printf("Car %d exited the one-way %s\n", car->thread, car->destination);
     return NULL;
