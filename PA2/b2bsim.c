@@ -6,23 +6,32 @@
 
 //Globals for thread stuff
 pthread_mutex_t mutexsum;
-static volatile int counter = 0;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
-//Global car stuff
+//CMD args
 int NUMCARS;
 int MAXCARS;
 int RANDSEED = 42;
+
+
 //0 == False, 1 == True
 int VERBOSITY = 0;
 int SAMEDIRECTION = 1;
+
+
 //array for storing the destination of the car
 char current_destination[16] = "";
 char travelLock[16] = "";
-//cars on bridge
+
+
+//Globals for keeping track of what is happening on the "one-way"
 static volatile int cars_OB = 0;
 static volatile int carsPassed = 0;
+static volatile int carsWaitingBZ = 0;
+static volatile int carsWaitingBR = 0;
+
+
 //Data structure to store directions and what thread is being used
 struct Car
 {
@@ -67,6 +76,12 @@ int main(int argc, char *argv[])
             printf("Setting them equal\n");
             MAXCARS = NUMCARS;
         }
+        if (NUMCARS < 1)
+        {
+            printf("If there are no cars what do we need to simulate?\n");
+            exit(EXIT_FAILURE);
+        }
+        
         printf("NUMCARS: %d MAXCARS: %d RANDSEED: %d VERBOSITY: %d \n", NUMCARS, MAXCARS, RANDSEED, VERBOSITY);
         printf("--------------------------------------------------\n");
     }
@@ -80,12 +95,24 @@ int main(int argc, char *argv[])
         {
             printf("Value of Verbosity: %d was too large. Can only be 0 or 1\nSetting output verbosity to false\n", VERBOSITY);
             VERBOSITY = 0;
+        }else if(MAXCARS == 0){
+            printf("Can't have 0 MAXCARS travelling on the one-way. Exiting\n");
+            exit(EXIT_FAILURE);
         }
-        if (MAXCARS > NUMCARS)
+        else if(NUMCARS == 0){
+            printf("If there are no cars what do we need to simulate? Exiting.\n");
+            exit(EXIT_FAILURE);
+        }else
         {
             printf("MAXCARS: %d can not be larger than NUMCARS: %d\n", MAXCARS, NUMCARS);
             printf("Setting them equal\n");
             MAXCARS = NUMCARS;
+        }
+        
+        if (NUMCARS < 1)
+        {
+            printf("If there are no cars what do we need to simulate?\n");
+            exit(EXIT_FAILURE);
         }
 
         printf("Values set\n");
@@ -125,12 +152,22 @@ void *oneVehicle(void *direction)
     struct Car *carStruct = direction;
     int threadID = (int)carStruct->thread;
     char *carDirection = carStruct->destination;
+    //Setting cars that are waiting from each direction.
+
+    if (strcmp(carDirection, "TO BOZEMAN") == 0)
+    {
+        carsWaitingBZ++;
+    }
+    else
+    {
+        carsWaitingBR++;
+    }
+
     if (threadID == 1)
     {
         strcpy(travelLock, carDirection);
         printf("Taking cars going %s first\n", carDirection);
     }
-    sleep(1);
     rc = pthread_mutex_lock(&lock);
     strcpy(current_destination, carDirection);
     if (rc)
@@ -140,7 +177,6 @@ void *oneVehicle(void *direction)
     }
     if (strcmp(travelLock, carDirection) == 0)
     {
-        printf("---->\n");
         arriveOneWay(carStruct);
         if (cars_OB < MAXCARS)
         {
@@ -149,12 +185,13 @@ void *oneVehicle(void *direction)
         }
         else
         {
-            printf("Bridge is fucking Full bro\n");
+            printf("One way is full...\n");
         }
     }
     else
     {
-        printf("<------\n Car %d going different direction, %s \n", threadID, carDirection);
+        printf("<---- Car %d going different direction need to wait... ---->%s \n", threadID, carDirection);
+        //If not going the same direction, wait here for cond to be signaled.
         pthread_cond_wait(&cond, &lock);
         arriveOneWay(carStruct);
         if (cars_OB <= MAXCARS)
@@ -164,41 +201,69 @@ void *oneVehicle(void *direction)
         }
         else
         {
-            printf("One way is fucing full\n");
+            printf("One way is full...\n");
         }
     }
+    //Signal the waiting threads.
     pthread_cond_signal(&cond);
     pthread_mutex_unlock(&lock);
+    //Get rid of threeads that are done.
     pthread_exit(NULL);
-    // return NULL;
+    return NULL;
 }
 
 void *arriveOneWay(struct Car *car)
 {
-    printf("Car %d waiting at one-way going %s\n", car->thread, car->destination);
-    sleep(1);
+    if (!VERBOSITY)
+    {
+        printf("Car %d waiting at one-way going %s\n", car->thread, car->destination);
+        sleep(1);
+    }
     return NULL;
 }
 
 void *onOneWay(struct Car *car)
 {
     cars_OB++;
-    printf("Car %d is currently on the bridge heading to %s\n", car->thread, car->destination);
+    if (!VERBOSITY)
+    {
+        printf("Car %d --> %s\n", car->thread, car->destination);
+    }
     return NULL;
 }
 
 void *exitOneWay(struct Car *car)
 {
-    cars_OB--;
-    
+    carsPassed++;
     sleep(1);
-    printf("Car %d exited the one-way %s\n", car->thread, car->destination);
+    if (strcmp(car->destination, "TO BOZEMAN") == 0)
+    {
+        carsWaitingBZ--;
+    }
+    else
+    {
+        carsWaitingBR--;
+    }
+    if (!VERBOSITY)
+    {
+        printf("Car %d exited the one-way\n", car->thread);
+    }
+    else
+    {
+        if (carsWaitingBR == 0 && carsWaitingBZ == 0)
+        {
+            cars_OB = 0;
+        }
+        printf("\n");
+        printf("+---------------------------------------------------+\n");
+        printf("| Car %d is exiting on the one way heading to %s\n", car->thread, car->destination);
+        printf("|   ______            | Cars on Bridge: %d\n", cars_OB);
+        printf("| /|_||_|`.__         | Cars Waiting To go to Bozeman: %d\n", carsWaitingBZ);
+        printf("| (   _    _ _|-------| Cars waiting to go to Bridger: %d\n", carsWaitingBR);
+        printf("| =`-(_)--(_)-' - - - | Cars Passed: %d\n", carsPassed);
+        printf("+----------------------------------------------------+\n");
+        printf("\n");
+    }
+    cars_OB--;
     return NULL;
-}
-
-void output(char *direction, int waiting, int onBridge, int passed)
-{
-    printf("Direction           Waiting Cars         On Bridge        Cars Passed\n");
-    printf("-----------         --------------       -----------      -------------\n");
-    printf("    %s              Waiting Cars: %d         %d                 %d\n", direction, waiting, onBridge, passed);
 }
