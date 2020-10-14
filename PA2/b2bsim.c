@@ -13,12 +13,7 @@ pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 int NUMCARS;
 int MAXCARS;
 int RANDSEED = 42;
-
-
-//0 == False, 1 == True
 int VERBOSITY = 0;
-int SAMEDIRECTION = 1;
-
 
 //array for storing the destination of the car
 char current_destination[16] = "";
@@ -194,7 +189,7 @@ void *oneVehicle(void *direction)
         //If not going the same direction, wait here for cond to be signaled.
         pthread_cond_wait(&cond, &lock);
         arriveOneWay(carStruct);
-        if (cars_OB <= MAXCARS)
+        if (cars_OB < MAXCARS)
         {
             onOneWay(carStruct);
             exitOneWay(carStruct);
